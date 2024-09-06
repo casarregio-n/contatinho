@@ -7,10 +7,14 @@ export type ContactProps = {
     image?: ImageProps
 }
 
-export function Contact() {
-    return <TouchableOpacity style={styles.container}>
-        <Avatar name="Pedro" image={require("@/assets/avatar.jpeg")} />
-        <Text style={styles.name}>Pedro</Text>
+type Props = TouchableOpacityProps & {
+    contact: ContactProps
+}
 
+export function Contact({contact, ...rest} : Props)
+ {
+    return <TouchableOpacity style={styles.container}>
+        <Avatar name="Pedro" image={contact.image} />
+        <Text style={styles.name}>{contact.name}</Text>
     </TouchableOpacity>
 }
