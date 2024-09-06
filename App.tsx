@@ -18,14 +18,12 @@ export default function App() {
   })
 
   if(!fontLoaded){
-    return<Loading/>
-  }
-  return(
+    return
     <>
     <StatusBar barStyle={'light-content'}
     backgroundColor={"transparent"}
     translucent/>
     <Home/>
     </>
-  )
+  }
 }
