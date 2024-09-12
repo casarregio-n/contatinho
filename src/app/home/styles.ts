@@ -56,7 +56,8 @@ export const styles = StyleSheet.create({
         fontFamily: theme.fontFamily.bold
     },
     phone:{
-
+        margin: 20,
+        flexDirection: "row",
     },
     phoneNumber:{
         fontSize: 18,
