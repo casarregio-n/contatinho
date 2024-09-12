@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { theme } from "@/theme/index";
 
-export const styles = StyleSheet.create ({
+export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.colors.gray_200,
@@ -11,7 +11,7 @@ export const styles = StyleSheet.create ({
         height: 132,
         backgroundColor: theme.colors.blue,
         justifyContent: "flex-end",
-        paddingHorizontal: 24, 
+        paddingHorizontal: 24,
     },
     input: {
         marginBottom: 27,
@@ -28,7 +28,9 @@ export const styles = StyleSheet.create ({
         borderRadius: 12,
     },
     contentList: {
-
+        padding: 24,
+        gap: 12,
+        paddingTop: 64,
     },
     separator: {
         width: "100%",
@@ -36,4 +38,17 @@ export const styles = StyleSheet.create ({
         backgroundColor: theme.colors.gray_300,
         margin: 12,
     },
+    bottomSheetContent: {
+
+    },
+    contactName: {
+
+    },
+    phone:{
+
+    },
+    phoneNumber:{
+
+    },
+
 })

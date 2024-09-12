@@ -1,19 +1,38 @@
 import { Alert, View, SectionList, Text } from "react-native";
+import { useState, useEffect, useId, useRef } from "react";
+
 import { Feather } from "@expo/vector-icons";
-import { styles } from "./styles";
 import * as Contacts from 'expo-contacts'
-import { Input } from "../components/input";
+import BottomSheet from "@gorhom/bottom-sheet";
+
+import { styles } from "./styles";
 import { theme } from "@/theme";
-import { useState, useEffect, useId } from "react";
+
+import { Input } from "../components/input";
 import { Contact, ContactProps } from "@/app/components/contact";
+import { Avatar } from "../components/avatar";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 type SectionListDataProps = {
     title: string
     data: ContactProps[]
 }
 export function Home() {
-    const [name, setName] = useState("")
     const [contacts, setContacts] = useState<SectionListDataProps[]>([])
+    const [name, setName] = useState("")
+    const [contact, setContact] = useState<Contacts.Contact>()
+
+    const bottomSheetRef = useRef<BottomSheet>(null)
+
+    const handleBottomSheetOpen = () => bottomSheetRef.current?.expand()
+    const handleBottomSheetClose = () => bottomSheetRef.current?.snapToIndex(0)
+
+    async function handleOpenDetails(id: string) {
+        const response = await Contacts.getContactByIdAsync(id)
+        setContact(response)
+        handleBottomSheetOpen()
+    }
+
     async function fetchContacts() {
         try {
             const { status } = await Contacts.requestPermissionsAsync()
@@ -45,7 +64,6 @@ export function Home() {
             Alert.alert("Contatos", "Não foi possivel carregar os contatos...")
         }
     }
-
     useEffect(() => {
         fetchContacts()
     }, [name])
@@ -62,14 +80,35 @@ export function Home() {
                 sections={contacts}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <Contact contact={item} />
+                    <TouchableOpacity
+                        onPress={() => {
+                            handleOpenDetails(item.id)
+                        }}>
+                        <Contact contact={item} />
+                    </TouchableOpacity>
                 )}
                 renderSectionHeader={({ section }) =>
                     (<Text style={styles.section}>{section.title}</Text>)}
                 contentContainerStyle={styles.contentList}
-                showsVerticalScrollIndicator= {false}
-                SectionSeparatorComponent={() => <View style={styles.separator}/>}
+                showsVerticalScrollIndicator={false}
+                SectionSeparatorComponent={() => <View style={styles.separator} />}
             />
+            {
+                contact &&
+                <BottomSheet ref={bottomSheetRef} snapPoints={[30, 284]} handleComponent={() => null}>
+                    <Avatar name={contact.name} image={contact.image} variant="large" />
+                    <View style={styles.bottomSheetContent}>
+                        <Text style={styles.contactName}>{contact.name}</Text>
+                    </View>
+                    {
+                        contact.phoneNumbers &&
+                        <View style={styles.phone}>
+                            <Feather name="phone" size={18} color={theme.colors.blue}></Feather>
+                            <Text style={styles.phoneNumber}>{contact.phoneNumbers[0].number}</Text>
+                        </View>
+                    }
+                </BottomSheet>
+            }
         </View>
 
     )
