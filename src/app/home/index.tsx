@@ -9,9 +9,11 @@ import { Contact, ContactProps } from "@/app/components/contact";
 
 type SectionListDataProps = {
     title: string
-    data: ContactProps
+    data: ContactProps[]
 }
 export function Home() {
+    const [name, setName] = useState("")
+    const [contacts, setContacts] = useState<SectionListDataProps[]>([])
     async function fetchContacts() {
         try {
             const { status } = await Contacts.requestPermissionsAsync()
@@ -42,8 +44,6 @@ export function Home() {
         }
     }
 
-    const [name, setName] = useState("")
-    const [contacts, setContacts] = useState<SectionListDataProps[]>([])
     useEffect(() => {
         fetchContacts()
     }, [])
