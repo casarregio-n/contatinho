@@ -58,6 +58,7 @@ export function Home() {
                     return acc
                 }, [])
                 setContacts(list)
+                setContact(data[0])
             }
         } catch (error) {
             console.log(error)
@@ -95,17 +96,18 @@ export function Home() {
             />
             {
                 contact &&
-                <BottomSheet ref={bottomSheetRef} snapPoints={[30, 284]} handleComponent={() => null}>
+                <BottomSheet ref={bottomSheetRef} snapPoints={[30, 284]} handleComponent={() => null} backgroundStyle={styles.bottomSheet}>
                     <Avatar name={contact.name} image={contact.image} variant="large" />
                     <View style={styles.bottomSheetContent}>
                         <Text style={styles.contactName}>{contact.name}</Text>
                     </View>
                     {
-                        contact.phoneNumbers &&
+                        contact.phoneNumbers &&(
                         <View style={styles.phone}>
-                            <Feather name="phone" size={18} color={theme.colors.blue}></Feather>
+                            <Feather name="phone" size={18} color={theme.colors.gray_400}></Feather>
                             <Text style={styles.phoneNumber}>{contact.phoneNumbers[0].number}</Text>
                         </View>
+                        )
                     }
                 </BottomSheet>
             }

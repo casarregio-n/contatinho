@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { theme } from "@/theme/index";
+import bottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet";
 
 export const styles = StyleSheet.create({
     container: {
@@ -38,17 +39,34 @@ export const styles = StyleSheet.create({
         backgroundColor: theme.colors.gray_300,
         margin: 12,
     },
+    bottomSheet: {
+        backgroundColor: "transparent"
+    },
     bottomSheetContent: {
-
+        flex: 1,
+        backgroundColor: theme.colors.gray_100,
+        borderStartEndRadius: 32,
+        borderTopEndRadius: 32,
+        paddingTop: 64,
+        alignItems: "center",
+        padding: 32,
     },
     contactName: {
-
+        fontSize: 32,
+        fontFamily: theme.fontFamily.bold
     },
     phone:{
 
     },
     phoneNumber:{
-
+        fontSize: 18,
+        fontFamily: theme.fontFamily.medium,
+        color: theme.colors.gray_400,
+    },
+    image: {
+        marginBottom: -50,
+        zIndex: 1,
+        alignSelf: "center",
     },
 
 })
